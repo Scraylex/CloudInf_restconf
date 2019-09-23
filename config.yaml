@@ -1,0 +1,15 @@
+interfaces:
+  - name: 1
+    ip: 10.3.255.107
+    mask: 255.255.255.0
+    is_loopback: false
+  - name: 2
+    ip: 10.3.255.108
+    mask: 255.255.255.0
+    is_loopback: true
+
+bgp:
+  - name: 1
+
+ospf:
+  - area: 1

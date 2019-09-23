@@ -1,0 +1,22 @@
+<interface>
+{% if is_loopback %}
+    <Loopback>
+{% else %}
+    <GigabitEthernet>
+{% endif %}
+        <name{{name}}1</name>
+        <description>Foobar</description>
+        <ip>
+            <address>
+                <primary>
+                    <address>{{ip}}</address>
+                    <mask>{{mask}}</mask>
+                </primary>
+            </address>
+        </ip>
+{% if is_loopback %}
+    </Loopback>
+{% else %}
+    </GigabitEthernet>
+{% endif %}
+</interface>
