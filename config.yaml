@@ -3,13 +3,24 @@ interfaces:
     ip: 10.3.255.107
     mask: 255.255.255.0
     is_loopback: false
+    ospf: area 0
   - name: 2
-    ip: 10.3.255.108
+    ip: 192.168.7.1
     mask: 255.255.255.0
+    is_loopback: false
+  -name: 0
+    ip: 7.7.7.7
+    mask: 255.255.255.255
     is_loopback: true
-
+    ospf: area 0
 bgp:
   - name: 1
+  - as: 7
 
 ospf:
-  - area: 1
+  - process: 1
+  - area: 0
+
+route:
+  -dest_ip: 192.168.7.0
+  -out_int: 2 #GigabitEthernet

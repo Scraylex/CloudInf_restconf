@@ -59,13 +59,26 @@ def configure_interface():
                 env = Environment(loader=FileSystemLoader('./'), trim_blocks=True, lstrip_blocks=True)
                 template = env.get_template('interface.j2')
                 print(template.render(int))
+
+                r = requests.put(url="https://10.3.255.107/restconf/data/Cisco-IOS-XE-native:native/interface",
+                                 data=template.render(int))
+                if r.status_code == 200:
+                    print("OK")
+                else:
+                    print("conf_int failed")
+
         elif k == 'bgp':
-            print("configure bpg")
+            env = Environment(loader=FileSystemLoader('./'), trim_blocks=True, lstrip_blocks=True)
+            template = env.get_template('route.j2')
+            template.render(k)
         elif k == 'ospf':
-            print('configure ospf')
+            configure_ospf()
+
 
 
 def configure_ospf():
+    pass
+def configure_bgp():
     pass
 
 

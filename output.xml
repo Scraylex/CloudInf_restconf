@@ -1,191 +1,190 @@
-
-<native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native"  xmlns:ios="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
-  <version>16.6</version>
-  <boot-start-marker/>
-  <boot-end-marker/>
-  <service>
-  <timestamps>
-  <debug>
-  <datetime>
-  <msec>
-  </msec>
-</datetime>
-</debug>
-<log>
-<datetime>
-  <msec/>
-</datetime>
-</log>
-</timestamps>
-</service>
-<platform>
-<console xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-platform">
-  <output>virtual</output>
-</console>
-</platform>
-<hostname>csr1000vpython07</hostname>
-<enable>
-<secret>
-  <type>5</type>
-  <secret>$1$peti$DuT6Y/R7pw6Wmi.wE6XMi1</secret>
-</secret>
-</enable>
-<username>
-  <name>python</name>
-  <privilege>15</privilege>
-  <secret>
-    <encryption>5</encryption>
-    <secret>$1$4BY9$2XrqppeYq.Od5cdB2I.R2/</secret>
-  </secret>
-</username>
-<ip>
-<domain>
-  <lookup>false</lookup>
-  <name>lab.ins.hsr.ch</name>
-</domain>
-<forward-protocol>
-  <protocol>nd</protocol>
-</forward-protocol>
-<route>
-  <ip-route-interface-forwarding-list>
-    <prefix>0.0.0.0</prefix>
-    <mask>0.0.0.0</mask>
-    <fwd-list>
-      <fwd>10.3.255.1</fwd>
-    </fwd-list>
-  </ip-route-interface-forwarding-list>
-</route>
-<ssh>
-<client>
-<algorithm>
-<encryption>
-  <aes128-ctr/>
-  <aes192-ctr/>
-  <aes256-ctr/>
-</encryption>
-</algorithm>
-</client>
-<server>
-<algorithm>
-<encryption>
-  <aes128-ctr/>
-  <aes192-ctr/>
-  <aes256-ctr/>
-</encryption>
-</algorithm>
-</server>
-<time-out>60</time-out>
-<version>2</version>
-</ssh>
-<http xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-http">
-<authentication>
-  <local/>
-</authentication>
-<server>false</server>
-<secure-server>true</secure-server>
-</http>
-</ip>
-<interface>
-  <GigabitEthernet>
-    <name>1</name>
-    <description>RESTful API Interface</description>
+<native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native" xmlns:ios="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+    <version>16.6</version>
+    <boot-start-marker/>
+    <boot-end-marker/>
+    <service>
+        <timestamps>
+            <debug>
+                <datetime>
+                    <msec>
+                    </msec>
+                </datetime>
+            </debug>
+            <log>
+                <datetime>
+                    <msec/>
+                </datetime>
+            </log>
+        </timestamps>
+    </service>
+    <platform>
+        <console xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-platform">
+            <output>virtual</output>
+        </console>
+    </platform>
+    <hostname>csr1000vpython07</hostname>
+    <enable>
+        <secret>
+            <type>5</type>
+            <secret>$1$peti$DuT6Y/R7pw6Wmi.wE6XMi1</secret>
+        </secret>
+    </enable>
+    <username>
+        <name>python</name>
+        <privilege>15</privilege>
+        <secret>
+            <encryption>5</encryption>
+            <secret>$1$4BY9$2XrqppeYq.Od5cdB2I.R2/</secret>
+        </secret>
+    </username>
     <ip>
-    <address>
-    <primary>
-      <address>10.3.255.107</address>
-      <mask>255.255.255.0</mask>
-    </primary>
-  </address>
-</ip>
-<mop>
-  <enabled>false</enabled>
-</mop>
-<negotiation xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-ethernet">
-  <auto>true</auto>
-</negotiation>
-</GigabitEthernet>
-</interface>
-<control-plane>
-</control-plane>
-<multilink>
-  <bundle-name xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-ppp">authenticated</bundle-name>
-</multilink>
-<redundancy>
-</redundancy>
-<spanning-tree>
-<extend xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-spanning-tree">
-  <system-id/>
-</extend>
-</spanning-tree>
-<subscriber>
-  <templating/>
-</subscriber>
-<crypto>
-<pki xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-crypto">
-<certificate>
-  <chain>
-    <name>TP-self-signed-4186461954</name>
-    <certificate>
-      <serial>01</serial>
-      <certtype>self-signed</certtype>
-    </certificate>
-  </chain>
-</certificate>
-<trustpoint>
-  <id>TP-self-signed-4186461954</id>
-  <enrollment>
-    <selfsigned/>
-  </enrollment>
-  <revocation-check>none</revocation-check>
-  <rsakeypair>
-    <key-label>TP-self-signed-4186461954</key-label>
-  </rsakeypair>
-  <subject-name>cn=IOS-Self-Signed-Certificate-4186461954</subject-name>
-</trustpoint>
-</pki>
-</crypto>
-<virtual-service>
-  <name>csr_mgmt</name>
-  <activate xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-vservice"/>
-</virtual-service>
-<license>
-<udi>
-  <pid>CSR1000V</pid>
-  <sn>9D3HQ9GLRJC</sn>
-</udi>
-<accept>
-  <end/>
-  <user/>
-  <agreement/>
-</accept>
-</license>
-<line>
-  <vty>
-    <first>0</first>
-    <last>4</last>
-    <logging>
-    <synchronous>
-    </synchronous>
-  </logging>
-  <login>
-    <local/>
-  </login>
-  <transport>
-  <input>
-    <input>ssh</input>
-  </input>
-  <output>
-    <output>ssh</output>
-  </output>
-  <preferred>
-    <protocol>ssh</protocol>
-  </preferred>
-</transport>
-</vty>
-</line>
-<diagnostic xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-diagnostics">
-<bootup>
-  <level>minimal</level>
-</bootup>
-</diagnostic>
+        <domain>
+            <lookup>false</lookup>
+            <name>lab.ins.hsr.ch</name>
+        </domain>
+        <forward-protocol>
+            <protocol>nd</protocol>
+        </forward-protocol>
+        <route>
+            <ip-route-interface-forwarding-list>
+                <prefix>0.0.0.0</prefix>
+                <mask>0.0.0.0</mask>
+                <fwd-list>
+                    <fwd>10.3.255.1</fwd>
+                </fwd-list>
+            </ip-route-interface-forwarding-list>
+        </route>
+        <ssh>
+            <client>
+                <algorithm>
+                    <encryption>
+                        <aes128-ctr/>
+                        <aes192-ctr/>
+                        <aes256-ctr/>
+                    </encryption>
+                </algorithm>
+            </client>
+            <server>
+                <algorithm>
+                    <encryption>
+                        <aes128-ctr/>
+                        <aes192-ctr/>
+                        <aes256-ctr/>
+                    </encryption>
+                </algorithm>
+            </server>
+            <time-out>60</time-out>
+            <version>2</version>
+        </ssh>
+        <http xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-http">
+            <authentication>
+                <local/>
+            </authentication>
+            <server>false</server>
+            <secure-server>true</secure-server>
+        </http>
+    </ip>
+    <interface>
+        <GigabitEthernet>
+            <name>1</name>
+            <description>RESTful API Interface</description>
+            <ip>
+                <address>
+                    <primary>
+                        <address>10.3.255.107</address>
+                        <mask>255.255.255.0</mask>
+                    </primary>
+                </address>
+            </ip>
+            <mop>
+                <enabled>false</enabled>
+            </mop>
+            <negotiation xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-ethernet">
+                <auto>true</auto>
+            </negotiation>
+        </GigabitEthernet>
+    </interface>
+    <control-plane>
+    </control-plane>
+    <multilink>
+        <bundle-name xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-ppp">authenticated</bundle-name>
+    </multilink>
+    <redundancy>
+    </redundancy>
+    <spanning-tree>
+        <extend xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-spanning-tree">
+            <system-id/>
+        </extend>
+    </spanning-tree>
+    <subscriber>
+        <templating/>
+    </subscriber>
+    <crypto>
+        <pki xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-crypto">
+            <certificate>
+                <chain>
+                    <name>TP-self-signed-4186461954</name>
+                    <certificate>
+                        <serial>01</serial>
+                        <certtype>self-signed</certtype>
+                    </certificate>
+                </chain>
+            </certificate>
+            <trustpoint>
+                <id>TP-self-signed-4186461954</id>
+                <enrollment>
+                    <selfsigned/>
+                </enrollment>
+                <revocation-check>none</revocation-check>
+                <rsakeypair>
+                    <key-label>TP-self-signed-4186461954</key-label>
+                </rsakeypair>
+                <subject-name>cn=IOS-Self-Signed-Certificate-4186461954</subject-name>
+            </trustpoint>
+        </pki>
+    </crypto>
+    <virtual-service>
+        <name>csr_mgmt</name>
+        <activate xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-vservice"/>
+    </virtual-service>
+    <license>
+        <udi>
+            <pid>CSR1000V</pid>
+            <sn>9D3HQ9GLRJC</sn>
+        </udi>
+        <accept>
+            <end/>
+            <user/>
+            <agreement/>
+        </accept>
+    </license>
+    <line>
+        <vty>
+            <first>0</first>
+            <last>4</last>
+            <logging>
+                <synchronous>
+                </synchronous>
+            </logging>
+            <login>
+                <local/>
+            </login>
+            <transport>
+                <input>
+                    <input>ssh</input>
+                </input>
+                <output>
+                    <output>ssh</output>
+                </output>
+                <preferred>
+                    <protocol>ssh</protocol>
+                </preferred>
+            </transport>
+        </vty>
+    </line>
+    <diagnostic xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-diagnostics">
+        <bootup>
+            <level>minimal</level>
+        </bootup>
+    </diagnostic>
 </native>
