@@ -7,13 +7,26 @@ interfaces:
     ip: 192.168.7.1
     mask: 255.255.255.0
     is_loopback: false
-  -name: 0
+  - name: 0
     ip: 7.7.7.7
     mask: 255.255.255.255
     is_loopback: true
 
-router:
-  - ospf:
-      - process: 1
-      - area: 0
-  - static: 192.168.7.0
+ospf:
+  networks:
+    - network: 10.3.255.0
+      mask: 0.0.0.255
+      area: 0
+    - network: 7.7.7.7
+      mask: 0.0.0.0
+      area: 0
+  process: 1
+
+bgp:
+  ass:
+    - as: 20
+      int:
+    - as: 7
+
+
+static: 192.168.7.0

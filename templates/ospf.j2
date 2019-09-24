@@ -1,0 +1,13 @@
+<router>
+    <ospf>
+        <id>{{ process }}</id>
+        {% for net in networks %}
+        <network>
+            <ip>{{ net.network }}</ip>
+            <mask>{{ net.mask }}</mask>
+            <area>{{ net.area }}</area>
+        </network>
+        {% endfor %}
+    </ospf>
+</router>
+

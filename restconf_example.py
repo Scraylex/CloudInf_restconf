@@ -45,60 +45,53 @@ def print_interfaces(host: dict) -> None:
     print(get_interfaces(host=host))
 
 
-def configure_interface(host: dict) -> None:
-    #load config from yaml
-    #config = {'is_loopback': 'True'}
+def configure(host: dict) -> None:
     config = load_device_config()
 
-    for k, v in config.items():
-        if k == 'interfaces':
-            # render and configure interfaces
-            print(k)
-            print(v)
-            for int in v:
+    for section, values in config.items():
+        if section == 'interfaces':
+            for interface in values:
+                send_data('Cisco-IOS-XE-native:native/interface', interface, host, 'templates/interface.j2')
 
-                print(render_template(int))
+        elif section == 'bgp':
+            send_data('Cisco-IOS-XE-native:native/interface', values, host, 'templates/bgp.j2')
 
-                put = requests.put(url=f"https://{host['connection_address']}/restconf/data/Cisco-IOS-XE-native:native/interface",
-                                   data=render_template(int), username=host['username'], password=host['password'])
-                if put.status_code == 200:
-                    print("OK")
-                else:
-                    print("conf_int failed")
+        elif section == 'ospf':
+            print(values)
+            send_data('Cisco-IOS-XE-native:native/interface', values, host, 'templates/ospf.j2')
 
-        elif k == 'bgp':
-            put = requests.put(url=f"https://{host['connection_address']}/restconf/data/", data=render_template(k),
-                               username=host['username'], password=host['password'])
+        elif section == 'route':
+            send_data('Cisco-IOS-XE-native:native/interface', values, host, 'templates/route.j2')
 
-        elif k == 'ospf':
-            put = requests.put(url=f"https://{host['connection_address']}/restconf/data/", data=render_template(k),
-                               username=host['username'], password=host['password'])
 
-        elif k == 'route':
-            put = requests.put(url=f"https://{host['connection_address']}/restconf/data/", data=render_template(k),
-                               username=host['username'], password=host['password'])
-
-def render_template(data):
-
+def render_template(data, template_file: str):
     env = Environment(loader=FileSystemLoader('./'), trim_blocks=True, lstrip_blocks=True)
-    template = env.get_template('interface.j2')
-    template.render(data)
+    template = env.get_template(template_file)
+    return template.render(data)
 
 
-def configure_ospf():
-    pass
-def configure_bgp():
-    pass
-def configure_loopback():
-    pass
+def send_data(restconf_path: str, data, host: dict, template_file: str):
+    print(render_template(data, template_file))
+
+    # Uncomment to actually send the configuration to the device
+    # put = requests.put(url=f"https://{host['connection_address']}/restconf/data/{restconf_path}",
+    #                    data=render_template(data, template_file),
+    #                    username=host['username'],
+    #                    password=host['password']
+    #                    )
+    # if put.status_code == 200:
+    #     print("Configuration successful")
+    # else:
+    #     print("Configuration failed")
+
 
 
 def main():
     devices = load_devices()
     for device in devices:
         logger.info(f'Getting information for device {device}')
-        print_interfaces(host=device)
-    configure_interface(host=)
+        #print_interfaces(host=device)
+    configure(host=device)
 
 
 if __name__ == '__main__':
