@@ -4,7 +4,7 @@
 {% else %}
     <GigabitEthernet>
 {% endif %}
-        <name{{name}}1</name>
+        <name>{{name}}1</name>
         <description>Foobar</description>
         <ip>
             <address>
@@ -20,3 +20,26 @@
     </GigabitEthernet>
 {% endif %}
 </interface>
+
+<router>
+    {% if ospf %}
+        <ospf>
+            <id>{{process}}</id>
+                <network>
+                    <ip>10.3.255.0</ip>
+                    <mask>0.0.0.255</mask>
+                    <area>0</area>
+                </network>
+                <network>
+                    <ip>7.7.7.7</ip>
+                    <mask>0.0.0.0</mask>
+                    <area>0</area>
+                </network>
+        </ospf>
+</router>
+{% if static %}
+<ipv4-unicast>
+    <route>
+        <destination-prefix>{{static}}</destination-prefix>
+    </route>
+<ipv4-unicast>
