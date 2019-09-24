@@ -1,0 +1,2 @@
+ydk>=0.8.2
+ydk-models-ietf>=0.1.5.post2

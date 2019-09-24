@@ -1,0 +1,35 @@
+Metadata-Version: 1.1
+Name: ydk
+Version: 0.8.4
+Summary: YDK Python SDK
+Home-page: https://github.com/CiscoDevNet/ydk-py
+Author: Cisco Systems
+Author-email: yang-dk@cisco.com
+License: Apache 2.0
+Description: 
+                           The YANG Development Kit (YDK) is a Software Development Kit
+                            that provides API's that are modeled in YANG. The main goal
+                            of YDK is to reduce the learning curve of YANG data models by
+                            expressing the model semantics in an API and abstracting
+                            protocol/encoding details. YDK is composed of a core package
+                            that defines services and providers, plus one or more module
+                            bundles that are based on YANG models.
+                           
+Keywords: yang,C++11,python bindings
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Education
+Classifier: Intended Audience :: Information Technology
+Classifier: Intended Audience :: Science/Research
+Classifier: Intended Audience :: System Administrators
+Classifier: Topic :: Software Development :: Build Tools
+Classifier: Topic :: Software Development :: Libraries
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.2
+Classifier: Programming Language :: Python :: 3.3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: C++
