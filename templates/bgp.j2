@@ -1,0 +1,20 @@
+''' to cisco-ios-xe/data/native/ '''
+
+<router>
+    <bgp>
+        <id>{{bgp-process}}
+            <router-id>{{router-ip}}</router-id>
+            <default>
+                <ipv4-unicast>{{ipv4-unicast}}</ipv4-unicast>
+            </default>
+            <default-information>
+                <originate></originate>
+            </default-information>
+
+            <neighbor>
+                <id>{{nei-ip}}</id>
+                <remote-as>{{remote-as}}<remote-as>
+            </neighbor>
+        </id>
+    </bgp>
+</router>

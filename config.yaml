@@ -23,10 +23,12 @@ ospf:
   process: 1
 
 bgp:
-  ass:
-    - as: 20
-      int:
-    - as: 7
+  - process: 1
+  - router_id: 192.168.7.1
+  - as: 65001
+  - ipv4-unicast: true
+  - nei-ip : 192.168.7.0
+  - remote-as: 65007
 
 
 static: 192.168.7.0
