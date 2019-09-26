@@ -1,20 +1,26 @@
-''' to cisco-ios-xe/data/native/ '''
-
-<router>
+{% if bgp %}
+<bgp xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-bgp">
+    <id>{{bgp_process}}</id>
+    <router-id>{{router-ip}}</router-id>
+    <default>
+        <ipv4-unicast>{{ipv4-unicast}}</ipv4-unicast>
+    </default>
+    <default-information>
+        <originate></originate>
+    </default-information>
     <bgp>
-        <id>{{bgp-process}}
-            <router-id>{{router-ip}}</router-id>
-            <default>
-                <ipv4-unicast>{{ipv4-unicast}}</ipv4-unicast>
-            </default>
-            <default-information>
-                <originate></originate>
-            </default-information>
-
-            <neighbor>
-                <id>{{nei-ip}}</id>
-                <remote-as>{{remote-as}}<remote-as>
-            </neighbor>
-        </id>
+        <log-neighbor-changes/>
     </bgp>
-</router>
+    <neighbor>
+        <id>{{bgp_nei}}</id>
+        <remote-as>{{bgp_nei_asn}}</remote-as>
+        <ebgp-multihop>
+            <max-hop>2</max-hop>
+        </ebgp-multihop>
+    </neighbor>
+    <network>
+        <number>{{bgp_network_ip}}</number>
+    </network>
+    </bgp>
+{% endif%}
+

@@ -1,31 +1,23 @@
-<interface>
-    {% if is_loopback %}
-    <Loopback>
-    {% else %}
-    <GigabitEthernet>
-    {% endif %}
-        <name>{{ name }}1</name>
-        <description>Foobar</description>
-        <ip>
-            <address>
-                <primary>
-                    <address>{{ ip }}</address>
-                    <mask>{{ mask }}</mask>
-                </primary>
-            </address>
-        </ip>
-    {% if is_loopback %}
-    </Loopback>
-    {% else %}
-    </GigabitEthernet>
-    {% endif %}
-</interface>
+
+        {% if is_loopback %}
+        <Loopback>
+        {% else %}
+        <GigabitEthernet>
+        {% endif %}
+            <name>{{ name }}1</name>
+            <description>{{ description }}</description>
+            <ip>
+                <address>
+                    <primary>
+                        <address>{{ ip }}</address>
+                        <mask>{{ mask }}</mask>
+                    </primary>
+                </address>
+            </ip>
+        {% if is_loopback %}
+        </Loopback>
+        {% else %}
+        </GigabitEthernet>
+        {% endif %}
 
 
-{% if static %}
-<ipv4-unicast>
-    <route>
-        <destination-prefix>{{static}}</destination-prefix>
-    </route>
-<ipv4-unicast>
-{% endif %}

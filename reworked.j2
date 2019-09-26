@@ -1,0 +1,128 @@
+<native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native"  xmlns:ios="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+    <ip>
+        <route>
+            <ip-route-interface-forwarding-list>
+                <prefix>0.0.0.0</prefix>
+                <mask>0.0.0.0</mask>
+                <fwd-list>
+                    <fwd>10.3.255.1</fwd>
+                </fwd-list>
+                {% if static_route %}
+                <prefix>{{prefix}}</prefix>
+                <mask>{{mask}}</mask>
+                <fwd-list>
+                  <fwd>{{dest}}</fwd>
+                </fwd-list>
+            </ip-route-interface-forwarding-list>
+        </route>
+    </ip>
+    {% endif%}
+
+    {% if gi %}
+    <interface>
+        <GigabitEthernet>
+            <name>{{id}}</name>
+            <description>RESTful API Interface</description>
+            <ip>
+                <address>
+                    <primary>
+                        <address>{{ip}}</address>
+                        <mask>{{mask}}</mask>
+                    </primary>
+                </address>
+            </ip>
+            <mop>
+                <enabled>false</enabled>
+            </mop>
+            <negotiation xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-ethernet">
+                <auto>true</auto>
+            </negotiation>
+        </GigabitEthernet>
+        {% endif%}
+
+        {% if lo0 %}
+        <Loopback>
+            <name>{{id}}</name>
+            <description>Software Loopback</description>
+            <ip>
+                <address>
+                    <primary>
+                        <address>{{ip}}</address>
+                        <mask>{{mask}}</mask>
+                    </primary>
+                </address>
+            </ip>
+        </Loopback>
+        {% endif%}
+
+        {% if lo1 %}
+        <Loopback>
+            <name>{{id}}</name>
+            <description>Software Loopback</description>
+            <ip>
+                <address>
+                    <primary>
+                        <address>{{ip}}</address>
+                        <mask>{{mask}}</mask>
+                    </primary>
+                </address>
+            </ip>
+        </Loopback>
+        {% endif%}
+    </interface>
+
+
+    {% if bgp %}
+        <bgp xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-bgp">
+            <id>{{bgp_process}}</id>
+            <bgp>
+                <log-neighbor-changes/>
+            </bgp>
+            <neighbor>
+                <id>{{bgp_nei}}</id>
+                <remote-as>{{bgp_nei_asn}}</remote-as>
+                <ebgp-multihop>
+                    <max-hop>2</max-hop>
+                </ebgp-multihop>
+            </neighbor>
+            <network>
+                <number>{{bgp_network_ip}}</number>
+            </network>
+        </bgp>
+        {% endif%}
+
+        
+        {% if ospf %}
+        <ospf xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-ospf">
+            <id>{{opsf_process}}</id>
+            <router-id>{{router_id}}</router-id>
+        {% endif%}
+
+            {% if network_id = 'lo0' %}
+            <network>
+                <ip>{{network_id}}</ip>
+                <mask>{{network_mask}}</mask>
+                <area>{{area}}</area>
+            </network>
+            {% endif%}
+
+            {% if network_id = 'gi1' %}
+            <network>
+                <ip>{{network_id}}</ip>
+                <mask>{{network_mask}}</mask>
+                <area>{{area}}</area>
+            </network>
+            {% endif%}
+
+            {% if network_id = 'lo1' %}
+            <network>
+                <ip>{{network_id}}</ip>
+                <mask>{{network_mask}}</mask>
+                <area>{{area}}</area>
+            </network>
+            {% endif%}
+
+        </ospf>
+    </router>
+</native>
+

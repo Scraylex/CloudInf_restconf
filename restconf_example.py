@@ -54,14 +54,14 @@ def configure(host: dict) -> None:
                 send_data('Cisco-IOS-XE-native:native/interface', interface, host, 'templates/interface.j2')
 
         elif section == 'bgp':
-            send_data('Cisco-IOS-XE-native:native/interface', values, host, 'templates/bgp.j2')
+            send_data('Cisco-IOS-XE-native:native/router/bgp', values, host, 'templates/bgp.j2')
 
         elif section == 'ospf':
             print(values)
-            send_data('Cisco-IOS-XE-native:native/interface', values, host, 'templates/ospf.j2')
+            send_data('Cisco-IOS-XE-native:native/router/ospf', values, host, 'templates/ospf.j2')
 
         elif section == 'route':
-            send_data('Cisco-IOS-XE-native:native/interface', values, host, 'templates/route.j2')
+            send_data('Cisco-IOS-XE-native:native/ip', values, host, 'templates/route.j2')
 
 
 def render_template(data, template_file: str):
