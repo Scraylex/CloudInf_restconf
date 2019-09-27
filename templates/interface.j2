@@ -15,7 +15,7 @@
             </address>
         </ip>
         {% if auto_negotiation %}
-        <negotiation>
+        <negotiation xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-ethernet">
             <auto>{{ auto_negotiation }}</auto>
         </negotiation>
         {% endif %}

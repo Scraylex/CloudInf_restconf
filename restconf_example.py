@@ -70,30 +70,23 @@ def render_template(data, template_file: str):
 def send_data(restconf_path: str, data, host: dict, template_file: str):
     print(render_template(data, template_file))
 
-    head = {'Content-Type': 'application/yang-data+xml',
-            'Accept': 'application/yang-data+xml'}
+    headers = {'Content-Type': 'application/yang-data+xml',
+               'Accept': 'application/yang-data+xml'}
+    payload = render_template(data, template_file)
     # Uncomment to actually send the configuration to the device
-    try:
-        response = requests.put(url=f"https://{host['connection_address']}/restconf/data/{restconf_path}",
-                                  data=render_template(data, template_file),
-                                  auth=(host['username'], host['password']),
-                                  headers=head,
-                                  verify=False
-                                  )
-    except requests.exceptions.Timeout:
-        # Maybe set up for a retry, or continue in a retry loop
-        print("Session Timeout")
-    except requests.exceptions.TooManyRedirects:
-        # Tell the user their URL was bad and try a different one
-        print("Too many redirects")
-    except requests.exceptions.RequestException as e:
-        print(e)
+    response = requests.patch(url=f"https://{host['connection_address']}/restconf/data/{restconf_path}",
+                              auth=(host['username'], host['password']),
+                              data=payload,
+                              headers=headers,
+                              verify=False
+                              )
 
-    # if response.status_code == 200:
-    #     print("Configuration successful")
-    # else:
-    #     print("Configuration failed")
-    #     print(response)
+    if response.status_code == 204:
+        print("Configuration successful")
+    else:
+        print("Configuration failed")
+        print(response.reason)
+        print(response.content)
 
 
 def main():

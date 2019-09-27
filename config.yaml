@@ -4,7 +4,7 @@ interfaces:
     ip: 10.3.255.107
     mask: 255.255.255.0
     is_loopback: false
-    auto_negotiation: true
+    auto_negotiation: 'true'
   - name: 1
     description: SoftwareLoopback
     ip: 192.168.7.1
