@@ -48,17 +48,17 @@ def print_interfaces(host: dict) -> None:
 def configure(host: dict) -> None:
     config = load_device_config()
 
-    send_data('Cisco-IOS-XE-native:native', config, host, 'reworked.j2')
-    # for section, values in config.items():
-    #     if section == 'interfaces':
-    #         for interface in values:
-    #             send_data('Cisco-IOS-XE-native:native/interface', interface, host, 'templates/interface.j2')
-    #
-    #     # elif section == 'bgp':
-    #     #     send_data('Cisco-IOS-XE-native:native/router/bgp', values, host, 'templates/bgp.j2')
-    #     #
-    #     elif section == 'ospf':
-    #         send_data('Cisco-IOS-XE-native:native/router/ospf/', values, host, 'templates/ospf.j2')
+    # send_data('Cisco-IOS-XE-native:native', config, host, 'reworked.j2')
+    for section, values in config.items():
+        if section == 'interfaces':
+            for interface in values:
+                send_data('Cisco-IOS-XE-native:native/interface', interface, host, 'templates/interface.j2')
+
+        elif section == 'bgp':
+            send_data('Cisco-IOS-XE-native:native/router/bgp/', values, host, 'templates/bgp.j2')
+
+        elif section == 'ospf':
+            send_data('Cisco-IOS-XE-native:native/router/ospf/', values, host, 'templates/ospf.j2')
 
 
 def render_template(data, template_file: str):
