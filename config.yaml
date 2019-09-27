@@ -1,33 +1,56 @@
 interfaces:
-  - name: 1
-    ip: 10.3.255.107
-    mask: 255.255.255.0
-    is_loopback: false
-  - name: 1
-    ip: 192.168.7.1
-    mask: 255.255.255.0
-    is_loopback: true
-  - name: 0
-    ip: 7.7.7.7
-    mask: 255.255.255.255
-    is_loopback: true
+  - gi1:
+      name: 1,
+      description: GigabitEthernet,
+      ip: 10.3.255.107,
+      mask: 255.255.255.0,
+      is_loopback: false
+
+  - lo1:
+       name: 1
+       description: SoftwareLoopback
+       ip: 192.168.7.1
+       mask: 255.255.255.0
+       is_loopback: true
+
+  - lo0:
+      name: 0
+      description: SoftwareLoopback
+      ip: 7.7.7.7
+      mask: 255.255.255.255
+      is_loopback: true
+
+
 
 ospf:
+  process: 1,
+  router-id: 7.7.7.7,
   networks:
-    - network: 10.3.255.0
-      mask: 0.0.0.255
+    - lo0:
+      id: 10.3.255.0,
+      mask: 0.0.0.255,
+      area: 0,
+
+    - lo1:
+      id:  7.7.7.7,
+      mask: 0.0.0.0,
+      area: 0,
+
+    - gi1:
+      id: 10.3.255.0,
+      mask: 0.0.0.255,
       area: 0
-    - network: 7.7.7.7
-      mask: 0.0.0.0
-      area: 0
-  process: 1
 
 bgp:
-  - process: 1
-  - router_id: 192.168.7.1
-  - ipv4-unicast: true
-  - nei-ip : 192.168.7.0
-  - remote-as: 65007
+  {
+    as_number: 7,
+    router_ip: 192.168.7.1,
+    ipv4-unicast: true,
+    bgp_nei-ip: 192.168.7.0,
+    bgp_nei_asn: 65007,
+    hops: 2,
+    bgp_network_ip: 192.168.7.0
+    }
 
 
 static: 192.168.7.0

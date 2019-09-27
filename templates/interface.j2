@@ -1,23 +1,27 @@
-
-        {% if is_loopback %}
+<native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native"  xmlns:ios="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+    {% for item in Interfaces.iteritems() %}
+        {% for value in item %}
+        {% if {{value.is_loopback}} %}
         <Loopback>
         {% else %}
         <GigabitEthernet>
         {% endif %}
-            <name>{{ name }}1</name>
-            <description>{{ description }}</description>
+            <name>{{ value.name }}</name>
+            <description>{{ value.description }}</description>
             <ip>
                 <address>
                     <primary>
-                        <address>{{ ip }}</address>
-                        <mask>{{ mask }}</mask>
+                        <address>{{ value.ip }}</address>
+                        <mask>{{ value.mask }}</mask>
                     </primary>
                 </address>
             </ip>
-        {% if is_loopback %}
+        {% if {{value.is_loopback}} %}
         </Loopback>
         {% else %}
         </GigabitEthernet>
         {% endif %}
-
+        {% endfor %}
+       {% endfor %}
+</native>
 

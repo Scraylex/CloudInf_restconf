@@ -95,5 +95,13 @@ def main():
 
 
 if __name__ == '__main__':
-    init_logger()
-    main()
+    #init_logger()
+    #main()
+    config = load_device_config()
+    #interfaces = render_template(data=config, template_file='templates/interface.j2')
+    #ospf = render_template(data=config, template_file='templates/ospf.j2')
+    # bgp = render_template(data=config, template_file='templates/bgp.j2')
+    print(config)
+    #print(interfaces)
+    #print(bgp)
+    #print(ospf)

@@ -1,10 +1,11 @@
-{% if ospf %}
+    {% for data in ospf %}
         <ospf xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-ospf">
-            <id>{{opsf_process}}</id>
+            <id>{{process}}</id>
             <router-id>{{router_id}}</router-id>
         {% endif%}
-
-            {% if network_id = 'lo0' %}
+        {% for data in networks %}
+            {% if lo0 %}
+            {% for data in lo0 %}
             <network>
                 <ip>{{network_id}}</ip>
                 <mask>{{network_mask}}</mask>
@@ -12,7 +13,8 @@
             </network>
             {% endif%}
 
-            {% if network_id = 'gi1' %}
+            {% if gi1 %}
+            {% for data in gi1 %}
             <network>
                 <ip>{{network_id}}</ip>
                 <mask>{{network_mask}}</mask>
@@ -21,12 +23,12 @@
             {% endif%}
 
             {% if network_id = 'lo1' %}
+            {% for data in lo1 %}
             <network>
                 <ip>{{network_id}}</ip>
                 <mask>{{network_mask}}</mask>
                 <area>{{area}}</area>
             </network>
-            {% endif%}
 
         </ospf>
 

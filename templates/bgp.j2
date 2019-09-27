@@ -1,6 +1,5 @@
-{% if bgp %}
 <bgp xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-bgp">
-    <id>{{bgp_process}}</id>
+    <id>{{as_number}}</id>
     <router-id>{{router-ip}}</router-id>
     <default>
         <ipv4-unicast>{{ipv4-unicast}}</ipv4-unicast>
@@ -12,15 +11,14 @@
         <log-neighbor-changes/>
     </bgp>
     <neighbor>
-        <id>{{bgp_nei}}</id>
+        <id>{{bgp_nei_ip}}</id>
         <remote-as>{{bgp_nei_asn}}</remote-as>
         <ebgp-multihop>
-            <max-hop>2</max-hop>
+            <max-hop><hops></max-hop>
         </ebgp-multihop>
     </neighbor>
     <network>
         <number>{{bgp_network_ip}}</number>
     </network>
     </bgp>
-{% endif%}
 
