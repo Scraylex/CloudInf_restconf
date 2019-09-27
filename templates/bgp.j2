@@ -1,24 +1,24 @@
 <bgp xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-bgp">
-    <id>{{as_number}}</id>
-    <router-id>{{router-ip}}</router-id>
-    <default>
-        <ipv4-unicast>{{ipv4-unicast}}</ipv4-unicast>
-    </default>
-    <default-information>
-        <originate></originate>
-    </default-information>
+    <id>{{ as_number }}</id>
     <bgp>
         <log-neighbor-changes/>
     </bgp>
+    {% for neighbor in neighbors %}
     <neighbor>
-        <id>{{bgp_nei_ip}}</id>
-        <remote-as>{{bgp_nei_asn}}</remote-as>
+        <id>{{ neighbor.ip }}</id>
+        <remote-as>{{ neighbor.remote_asn }}</remote-as>
         <ebgp-multihop>
-            <max-hop><hops></max-hop>
+            <max-hop>{{ neighbor.max_hops }}</max-hop>
         </ebgp-multihop>
+        {% if neighbor.update_source %}
+        <update-source>
+            <Loopback>{{ neighbor.update_source }}</Loopback>
+        </update-source>
+        {% endif %}
     </neighbor>
+    {% endfor %}
     <network>
-        <number>{{bgp_network_ip}}</number>
+        <number>{{ network_ip }}</number>
     </network>
-    </bgp>
+</bgp>
 

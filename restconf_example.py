@@ -50,18 +50,19 @@ def configure(host: dict) -> None:
 
     for section, values in config.items():
         if section == 'interfaces':
-            for interface in values:
-                send_data('Cisco-IOS-XE-native:native/interface', interface, host, 'templates/interface.j2')
+            pass
+        #     for interface in values:
+        #         send_data('Cisco-IOS-XE-native:native/interface', interface, host, 'templates/interface.j2')
 
         elif section == 'bgp':
             send_data('Cisco-IOS-XE-native:native/router/bgp', values, host, 'templates/bgp.j2')
 
-        elif section == 'ospf':
-            print(values)
-            send_data('Cisco-IOS-XE-native:native/router/ospf', values, host, 'templates/ospf.j2')
-
-        elif section == 'route':
-            send_data('Cisco-IOS-XE-native:native/ip', values, host, 'templates/route.j2')
+        # elif section == 'ospf':
+        #     print(values)
+        #     send_data('Cisco-IOS-XE-native:native/router/ospf', values, host, 'templates/ospf.j2')
+        #
+        # elif section == 'route':
+        #     send_data('Cisco-IOS-XE-native:native/ip', values, host, 'templates/route.j2')
 
 
 def render_template(data, template_file: str):
@@ -96,12 +97,12 @@ def main():
 
 if __name__ == '__main__':
     #init_logger()
-    #main()
-    config = load_device_config()
+    main()
+    # config = load_device_config()
     #interfaces = render_template(data=config, template_file='templates/interface.j2')
     #ospf = render_template(data=config, template_file='templates/ospf.j2')
     # bgp = render_template(data=config, template_file='templates/bgp.j2')
-    print(config)
+    #print(config)
     #print(interfaces)
     #print(bgp)
     #print(ospf)
