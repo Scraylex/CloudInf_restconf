@@ -1,34 +1,18 @@
-    {% for data in ospf %}
-        <ospf xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-ospf">
-            <id>{{process}}</id>
-            <router-id>{{router_id}}</router-id>
-        {% endif%}
-        {% for data in networks %}
-            {% if lo0 %}
-            {% for data in lo0 %}
-            <network>
-                <ip>{{network_id}}</ip>
-                <mask>{{network_mask}}</mask>
-                <area>{{area}}</area>
-            </network>
-            {% endif%}
-
-            {% if gi1 %}
-            {% for data in gi1 %}
-            <network>
-                <ip>{{network_id}}</ip>
-                <mask>{{network_mask}}</mask>
-                <area>{{area}}</area>
-            </network>
-            {% endif%}
-
-            {% if network_id = 'lo1' %}
-            {% for data in lo1 %}
-            <network>
-                <ip>{{network_id}}</ip>
-                <mask>{{network_mask}}</mask>
-                <area>{{area}}</area>
-            </network>
-
-        </ospf>
-
+<ospf xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-ospf">
+    <id>{{process}}</id>
+    <router-id>{{router_id}}</router-id>
+    {% if passive_interfaces %}
+    <passive-interface>
+    {% for interface in passive_interfaces %}
+        <interface>{{ interface }}</interface>
+    {% endfor %}
+    </passive-interface>
+    {% endif%}
+    {% for network in networks %}
+    <network>
+        <ip>{{ network_id }}</ip>
+        <mask>{{ network_mask }}</mask>
+        <area>{{ area }}</area>
+    </network>
+    {% endfor %}
+</ospf>

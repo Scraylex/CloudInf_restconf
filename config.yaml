@@ -1,44 +1,35 @@
 interfaces:
-  - gi1:
-      name: 1,
-      description: GigabitEthernet,
-      ip: 10.3.255.107,
-      mask: 255.255.255.0,
-      is_loopback: false
-
-  - lo1:
-       name: 1
-       description: SoftwareLoopback
-       ip: 192.168.7.1
-       mask: 255.255.255.0
-       is_loopback: true
-
-  - lo0:
-      name: 0
-      description: SoftwareLoopback
-      ip: 7.7.7.7
-      mask: 255.255.255.255
-      is_loopback: true
-
-
+  - name: 1,
+    description: GigabitEthernet,
+    ip: 10.3.255.107,
+    mask: 255.255.255.0,
+    is_loopback: false
+    auto_negotiation: true
+  - name: 1
+    description: SoftwareLoopback
+    ip: 192.168.7.1
+    mask: 255.255.255.0
+    is_loopback: true
+  - name: 0
+    description: SoftwareLoopback
+    ip: 7.7.7.7
+    mask: 255.255.255.255
+    is_loopback: true
 
 ospf:
-  process: 1,
-  router-id: 7.7.7.7,
+  process: 1
+  router-id: 7.7.7.7
+  passive_interfaces:
+    - interface: Loopback1
   networks:
-    - lo0:
-      id: 10.3.255.0,
-      mask: 0.0.0.255,
-      area: 0,
-
-    - lo1:
-      id:  7.7.7.7,
-      mask: 0.0.0.0,
-      area: 0,
-
-    - gi1:
-      id: 10.3.255.0,
-      mask: 0.0.0.255,
+    - network: 10.3.255.0
+      mask: 0.0.0.255
+      area: 0
+    - network:  7.7.7.7
+      mask: 0.0.0.0
+      area: 0
+    - network: 192.168.7.0
+      mask: 0.0.0.255
       area: 0
 
 bgp:
