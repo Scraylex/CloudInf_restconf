@@ -5,7 +5,7 @@
     </bgp>
     {% for neighbor in neighbors %}
     <neighbor>
-        <id>{{ neighbor.ip }}</id>
+        <id>{{ neighbor.id }}</id>
         <remote-as>{{ neighbor.remote_asn }}</remote-as>
         <ebgp-multihop>
             <max-hop>{{ neighbor.max_hops }}</max-hop>

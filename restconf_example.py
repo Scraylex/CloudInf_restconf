@@ -61,9 +61,6 @@ def configure(host: dict) -> None:
             print(values)
             send_data('Cisco-IOS-XE-native:native/router/ospf', values, host, 'templates/ospf.j2')
 
-        # elif section == 'route':
-        #     send_data('Cisco-IOS-XE-native:native/ip', values, host, 'templates/route.j2')
-
 
 def render_template(data, template_file: str):
     env = Environment(loader=FileSystemLoader('./'), trim_blocks=True, lstrip_blocks=True)

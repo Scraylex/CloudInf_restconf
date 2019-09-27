@@ -1,8 +1,8 @@
 interfaces:
-  - name: 1,
-    description: GigabitEthernet,
-    ip: 10.3.255.107,
-    mask: 255.255.255.0,
+  - name: 1
+    description: GigabitEthernet
+    ip: 10.3.255.107
+    mask: 255.255.255.0
     is_loopback: false
     auto_negotiation: true
   - name: 1
@@ -18,9 +18,9 @@ interfaces:
 
 ospf:
   process: 1
-  router-id: 7.7.7.7
+  router_id: 7.7.7.7
   passive_interfaces:
-    - interface: Loopback1
+    - Loopback1
   networks:
     - network: 10.3.255.0
       mask: 0.0.0.255

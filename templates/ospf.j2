@@ -1,6 +1,6 @@
 <ospf xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-ospf">
-    <id>{{process}}</id>
-    <router-id>{{router_id}}</router-id>
+    <id>{{ process }}</id>
+    <router-id>{{ router_id }}</router-id>
     {% if passive_interfaces %}
     <passive-interface>
     {% for interface in passive_interfaces %}
@@ -10,9 +10,9 @@
     {% endif%}
     {% for network in networks %}
     <network>
-        <ip>{{ network_id }}</ip>
-        <mask>{{ network_mask }}</mask>
-        <area>{{ area }}</area>
+        <ip>{{ network.network }}</ip>
+        <mask>{{ network.mask }}</mask>
+        <area>{{ network.area }}</area>
     </network>
     {% endfor %}
 </ospf>
