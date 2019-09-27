@@ -1,6 +1,6 @@
 interfaces:
   - name: 1
-    description: GigabitEthernet
+    description: RESTful API Interface
     ip: 10.3.255.107
     mask: 255.255.255.0
     is_loopback: false

@@ -40,6 +40,7 @@ class RestconfRequestHelper:
 
         logger.debug(f'GET request to {url}')
         request_headers = self.get_headers(restconf_format, headers)
+        print(request_headers)
         response = requests.request(method='GET', auth=(username, password),
                                     headers=request_headers,
                                     url=url,

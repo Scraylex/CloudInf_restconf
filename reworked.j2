@@ -1,128 +1,79 @@
 <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native"  xmlns:ios="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
-    <ip>
-        <route>
-            <ip-route-interface-forwarding-list>
-                <prefix>0.0.0.0</prefix>
-                <mask>0.0.0.0</mask>
-                <fwd-list>
-                    <fwd>10.3.255.1</fwd>
-                </fwd-list>
-                {% if static_route %}
-                <prefix>{{prefix}}</prefix>
-                <mask>{{mask}}</mask>
-                <fwd-list>
-                  <fwd>{{dest}}</fwd>
-                </fwd-list>
-            </ip-route-interface-forwarding-list>
-        </route>
-    </ip>
-    {% endif%}
-
-    {% if gi %}
     <interface>
+        {% for interface in interfaces %}
+        {% if interface.is_loopback %}
+        <Loopback>
+        {% else %}
         <GigabitEthernet>
-            <name>{{id}}</name>
-            <description>RESTful API Interface</description>
+        {% endif %}
+            <name>{{ interface.name }}</name>
+            <description>{{ interface.description }}</description>
             <ip>
                 <address>
                     <primary>
-                        <address>{{ip}}</address>
-                        <mask>{{mask}}</mask>
+                        <address>{{ interface.ip }}</address>
+                        <mask>{{ interface.mask }}</mask>
                     </primary>
                 </address>
             </ip>
-            <mop>
-                <enabled>false</enabled>
-            </mop>
-            <negotiation xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-ethernet">
-                <auto>true</auto>
+            {% if interface.auto_negotiation %}
+            <negotiation>
+                <auto>{{ interface.auto_negotiation }}</auto>
             </negotiation>
+            {% endif %}
+        {% if interface.is_loopback %}
+        </Loopback>
+        {% else %}
         </GigabitEthernet>
-        {% endif%}
-
-        {% if lo0 %}
-        <Loopback>
-            <name>{{id}}</name>
-            <description>Software Loopback</description>
-            <ip>
-                <address>
-                    <primary>
-                        <address>{{ip}}</address>
-                        <mask>{{mask}}</mask>
-                    </primary>
-                </address>
-            </ip>
-        </Loopback>
-        {% endif%}
-
-        {% if lo1 %}
-        <Loopback>
-            <name>{{id}}</name>
-            <description>Software Loopback</description>
-            <ip>
-                <address>
-                    <primary>
-                        <address>{{ip}}</address>
-                        <mask>{{mask}}</mask>
-                    </primary>
-                </address>
-            </ip>
-        </Loopback>
-        {% endif%}
+        {% endif %}
+        {% endfor %}
     </interface>
-
-
-    {% if bgp %}
+    <router>
+        {% if ospf %}
+        <ospf xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-ospf">
+            <id>{{ ospf.process }}</id>
+            <router-id>{{ ospf.router_id }}</router-id>
+            {% if ospf.passive_interfaces %}
+            <passive-interface>
+            {% for interface in ospf.passive_interfaces %}
+                <interface>{{ interface }}</interface>
+            {% endfor %}
+            </passive-interface>
+            {% endif%}
+            {% for network in ospf.networks %}
+            <network>
+                <ip>{{ network.network }}</ip>
+                <mask>{{ network.mask }}</mask>
+                <area>{{ network.area }}</area>
+            </network>
+            {% endfor %}
+        </ospf>
+        {% endif %}
+        {% if bgp %}
         <bgp xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-bgp">
-            <id>{{bgp_process}}</id>
+            <id>{{ bgp.as_number }}</id>
             <bgp>
                 <log-neighbor-changes/>
             </bgp>
+            {% for neighbor in bgp.neighbors %}
             <neighbor>
-                <id>{{bgp_nei}}</id>
-                <remote-as>{{bgp_nei_asn}}</remote-as>
+                <id>{{ neighbor.id }}</id>
+                <remote-as>{{ neighbor.remote_asn }}</remote-as>
                 <ebgp-multihop>
-                    <max-hop>2</max-hop>
+                    <max-hop>{{ neighbor.max_hops }}</max-hop>
                 </ebgp-multihop>
+                {% if neighbor.update_source %}
+                <update-source>
+                    <Loopback>{{ neighbor.update_source }}</Loopback>
+                </update-source>
+                {% endif %}
             </neighbor>
+            {% endfor %}
             <network>
-                <number>{{bgp_network_ip}}</number>
+                <number>{{ bgp.network_ip }}</number>
             </network>
         </bgp>
-        {% endif%}
-
-        
-        {% if ospf %}
-        <ospf xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-ospf">
-            <id>{{opsf_process}}</id>
-            <router-id>{{router_id}}</router-id>
-        {% endif%}
-
-            {% if network_id = 'lo0' %}
-            <network>
-                <ip>{{network_id}}</ip>
-                <mask>{{network_mask}}</mask>
-                <area>{{area}}</area>
-            </network>
-            {% endif%}
-
-            {% if network_id = 'gi1' %}
-            <network>
-                <ip>{{network_id}}</ip>
-                <mask>{{network_mask}}</mask>
-                <area>{{area}}</area>
-            </network>
-            {% endif%}
-
-            {% if network_id = 'lo1' %}
-            <network>
-                <ip>{{network_id}}</ip>
-                <mask>{{network_mask}}</mask>
-                <area>{{area}}</area>
-            </network>
-            {% endif%}
-
-        </ospf>
+        {% endif %}
     </router>
 </native>
 
