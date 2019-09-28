@@ -1,4 +1,6 @@
 <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native"  xmlns:ios="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+    <hostname>{{ hostname }}</hostname>
+    {% if interfaces %}
     <interface>
         {% for interface in interfaces %}
         {% if interface.is_loopback %}
@@ -17,7 +19,7 @@
                 </address>
             </ip>
             {% if interface.auto_negotiation %}
-            <negotiation>
+            <negotiation xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-ethernet">
                 <auto>{{ interface.auto_negotiation }}</auto>
             </negotiation>
             {% endif %}
@@ -28,6 +30,7 @@
         {% endif %}
         {% endfor %}
     </interface>
+    {% endif %}
     <router>
         {% if ospf %}
         <ospf xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-ospf">
@@ -52,16 +55,15 @@
         {% if bgp %}
         <bgp xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-bgp">
             <id>{{ bgp.as_number }}</id>
-            <bgp>
-                <log-neighbor-changes/>
-            </bgp>
             {% for neighbor in bgp.neighbors %}
             <neighbor>
                 <id>{{ neighbor.id }}</id>
                 <remote-as>{{ neighbor.remote_asn }}</remote-as>
+                {% if neighbor.max_hops %}
                 <ebgp-multihop>
                     <max-hop>{{ neighbor.max_hops }}</max-hop>
                 </ebgp-multihop>
+                {% endif %}
                 {% if neighbor.update_source %}
                 <update-source>
                     <Loopback>{{ neighbor.update_source }}</Loopback>
@@ -71,6 +73,7 @@
             {% endfor %}
             <network>
                 <number>{{ bgp.network_ip }}</number>
+                <mask>{{ bgp.mask }}</mask>
             </network>
         </bgp>
         {% endif %}

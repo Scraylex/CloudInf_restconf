@@ -1,27 +1,29 @@
 <interface xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native"  xmlns:ios="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
-    {% if is_loopback %}
+    {% for interface in interfaces %}
+    {% if interface.is_loopback %}
     <Loopback>
     {% else %}
     <GigabitEthernet>
     {% endif %}
-        <name>{{ name }}</name>
-        <description>{{ description }}</description>
+        <name>{{ interface.name }}</name>
+        <description>{{ interface.description }}</description>
         <ip>
             <address>
                 <primary>
-                    <address>{{ ip }}</address>
-                    <mask>{{ mask }}</mask>
+                    <address>{{ interface.ip }}</address>
+                    <mask>{{ interface.mask }}</mask>
                 </primary>
             </address>
         </ip>
-        {% if auto_negotiation %}
+        {% if interface.auto_negotiation %}
         <negotiation xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-ethernet">
-            <auto>{{ auto_negotiation }}</auto>
+            <auto>{{ interface.auto_negotiation }}</auto>
         </negotiation>
         {% endif %}
-    {% if is_loopback %}
+    {% if interface.is_loopback %}
     </Loopback>
     {% else %}
     </GigabitEthernet>
     {% endif %}
+    {% endfor %}
 </interface>

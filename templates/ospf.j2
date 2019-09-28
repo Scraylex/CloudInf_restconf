@@ -1,14 +1,14 @@
 <ospf xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-ospf"  xmlns:ios-ospf="http://cisco.com/ns/yang/Cisco-IOS-XE-ospf"  xmlns:ios="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
-    <id>{{ process }}</id>
-    <router-id>{{ router_id }}</router-id>
-    {% if passive_interfaces %}
+    <id>{{ ospf.process }}</id>
+    <router-id>{{ ospf.router_id }}</router-id>
+    {% if ospf.passive_interfaces %}
     <passive-interface>
-    {% for interface in passive_interfaces %}
+    {% for interface in ospf.passive_interfaces %}
         <interface>{{ interface }}</interface>
     {% endfor %}
     </passive-interface>
     {% endif%}
-    {% for network in networks %}
+    {% for network in ospf.networks %}
     <network>
         <ip>{{ network.network }}</ip>
         <mask>{{ network.mask }}</mask>

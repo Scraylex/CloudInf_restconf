@@ -48,17 +48,17 @@ def print_interfaces(host: dict) -> None:
 def configure(host: dict) -> None:
     config = load_device_config()
 
-    # send_data('Cisco-IOS-XE-native:native', config, host, 'reworked.j2')
+    # send_configuration('Cisco-IOS-XE-native:native', config, host, 'config.j2')
     for section, values in config.items():
         if section == 'interfaces':
             for interface in values:
-                send_data('Cisco-IOS-XE-native:native/interface', interface, host, 'templates/interface.j2')
+                send_configuration('Cisco-IOS-XE-native:native/interface', interface, host, 'templates/interface.j2')
 
         elif section == 'bgp':
-            send_data('Cisco-IOS-XE-native:native/router/bgp/', values, host, 'templates/bgp.j2')
+            send_configuration('Cisco-IOS-XE-native:native/router/bgp/', values, host, 'templates/bgp.j2')
 
         elif section == 'ospf':
-            send_data('Cisco-IOS-XE-native:native/router/ospf/', values, host, 'templates/ospf.j2')
+            send_configuration('Cisco-IOS-XE-native:native/router/ospf/', values, host, 'templates/ospf.j2')
 
 
 def render_template(data, template_file: str):
@@ -67,13 +67,12 @@ def render_template(data, template_file: str):
     return template.render(data)
 
 
-def send_data(restconf_path: str, data, host: dict, template_file: str):
+def send_configuration(restconf_path: str, data, host: dict, template_file: str):
     print(render_template(data, template_file))
 
     headers = {'Content-Type': 'application/yang-data+xml',
                'Accept': 'application/yang-data+xml'}
     payload = render_template(data, template_file)
-    # Uncomment to actually send the configuration to the device
     response = requests.patch(url=f"https://{host['connection_address']}/restconf/data/{restconf_path}",
                               auth=(host['username'], host['password']),
                               data=payload,

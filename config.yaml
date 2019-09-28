@@ -1,3 +1,5 @@
+hostname: RT-7
+
 interfaces:
   - name: 1
     description: RESTful API Interface
@@ -6,7 +8,7 @@ interfaces:
     is_loopback: false
     auto_negotiation: 'true'
   - name: 1
-    description: SoftwareLoopback
+    description: Loopback Network
     ip: 192.168.7.1
     mask: 255.255.255.0
     is_loopback: true
@@ -35,13 +37,9 @@ ospf:
 bgp:
   as_number: 7
   network_ip: 192.168.7.0
+  mask: 255.255.255.0
   neighbors:
     - id: 20.20.20.20
       remote_asn: 20
       max_hops: 2
-    - id: 7.7.7.7
-      remote_asn: 7
-      max_hops: 2
-      update_source: 1
-
-
+      update_source: '0'
