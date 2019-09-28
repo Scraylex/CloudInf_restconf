@@ -161,6 +161,11 @@ whole sections in the `config.yaml` file which will not break the execution of t
 in the template which sections are available. We also included basic error handling to check if a section
 is available in the `config.yaml` file if you only want to configure a specifiy section with `-s` or `--section`.
 
-The given network architecture required the configuration of several things. The interfaces had to be correctly addressed and masked, with two of them being loopback interfaces thus requiring a is_loopback attribute for the templating engine. An ospf process is required on the physical and on one loopback interface, both belong to area 0, thus providing backbone connectivity. We chose ospfv2, because of the extendability of simply having a list of added networks. A Bgp process is necessary so that the loopback interface outside of the ospf process has full connectivity into the adjacent networks of our router.
+The given network architecture required the configuration of several things. The interfaces had to be correctly
+addressed and masked, with two of them being loopback interfaces thus requiring a `is_loopback` attribute for
+the templating engine. An ospf process is required on the physical and on one loopback interface, both belong
+to area 0, thus providing backbone connectivity. We chose ospfv2, because of the extendability of simply having
+a list of added networks. A Bgp process is necessary so that the loopback interface outside of the ospf process
+has full connectivity into the adjacent networks of our router.
 
 
