@@ -3,7 +3,6 @@ from typing import List
 
 import requests
 import yaml
-from jinja2 import Environment, FileSystemLoader
 
 import restconf_helpers
 
@@ -18,15 +17,9 @@ def load_devices() -> List[dict]:
         return hosts
 
 
-def load_device_config():
-    with open('config.yaml', 'r') as config_file:
-        config = yaml.load(config_file.read(), Loader=yaml.FullLoader)
-        return config
-
-
 def init_logger():
     _logger = logging.getLogger('restconf')
-    # _logger.setLevel(logging.DEBUG)
+    _logger.setLevel(logging.DEBUG)
     ch = logging.StreamHandler()
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     ch.setFormatter(formatter)
@@ -45,55 +38,11 @@ def print_interfaces(host: dict) -> None:
     print(get_interfaces(host=host))
 
 
-def configure(host: dict) -> None:
-    config = load_device_config()
-
-    # send_configuration('Cisco-IOS-XE-native:native', config, host, 'config.j2')
-    for section, values in config.items():
-        if section == 'interfaces':
-            for interface in values:
-                send_configuration('Cisco-IOS-XE-native:native/interface', interface, host, 'templates/interface.j2')
-
-        elif section == 'bgp':
-            send_configuration('Cisco-IOS-XE-native:native/router/bgp/', values, host, 'templates/bgp.j2')
-
-        elif section == 'ospf':
-            send_configuration('Cisco-IOS-XE-native:native/router/ospf/', values, host, 'templates/ospf.j2')
-
-
-def render_template(data, template_file: str):
-    env = Environment(loader=FileSystemLoader('./'), trim_blocks=True, lstrip_blocks=True)
-    template = env.get_template(template_file)
-    return template.render(data)
-
-
-def send_configuration(restconf_path: str, data, host: dict, template_file: str):
-    print(render_template(data, template_file))
-
-    headers = {'Content-Type': 'application/yang-data+xml',
-               'Accept': 'application/yang-data+xml'}
-    payload = render_template(data, template_file)
-    response = requests.patch(url=f"https://{host['connection_address']}/restconf/data/{restconf_path}",
-                              auth=(host['username'], host['password']),
-                              data=payload,
-                              headers=headers,
-                              verify=False
-                              )
-
-    if response.status_code == 204:
-        print("Configuration successful")
-    else:
-        print("Configuration failed")
-        print(response.reason)
-        print(response.content)
-
-
 def main():
     devices = load_devices()
     for device in devices:
         logger.info(f'Getting information for device {device}')
-        # print_interfaces(host=device)
-    configure(host=device)
+        print_interfaces(host=device)
 
 
 if __name__ == '__main__':
